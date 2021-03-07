@@ -1,0 +1,12 @@
+{
+  "name": "sports-betting",
+  "displayName": "sports-betting",
+  "expo": {
+    "name": "sports-betting",
+    "slug": "sports-betting",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
