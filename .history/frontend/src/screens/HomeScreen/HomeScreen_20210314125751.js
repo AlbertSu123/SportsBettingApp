@@ -14,7 +14,7 @@ class HomeScreen extends Component {
             // Sign-out successful.
             }).catch((error) => {
             // An error happened.
-            }).then(window.location.reload())
+            }).then(window.location(false))
 
     }
 

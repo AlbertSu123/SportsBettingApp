@@ -1,12 +1,9 @@
 import React, {Component} from 'react'
-import { Text, View, TextInput, TouchableOpacity} from 'react-native'
-import { firebase } from '../../firebase/config'
-
+import { Text, View } from 'react-native'
 
 class HomeScreen extends Component {
     constructor(props) {
         super(props)
-        this.logout = this.logout.bind(this)
     }
 
     logout() {
@@ -14,7 +11,7 @@ class HomeScreen extends Component {
             // Sign-out successful.
             }).catch((error) => {
             // An error happened.
-            }).then(window.location.reload())
+            });
 
     }
 
@@ -25,8 +22,8 @@ class HomeScreen extends Component {
                 <Text>Home Screen</Text>
                     <TouchableOpacity
         
-                        onPress={() => this.logout()}>
-                        <Text>Log Out</Text>
+                        onPress={() => logout()}>
+                        <Text style={styles.buttonTitle}>Log Out</Text>
                     </TouchableOpacity>
             </View>
         )

@@ -23,6 +23,8 @@ export default function RegistrationScreen({navigation}) {
                 .auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then((response) => alert(response))
+            
+                
                 .catch((error) => {
                     alert(error)
             });

@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { Text, View, TextInput, TouchableOpacity} from 'react-native'
-import { firebase } from '../../firebase/config'
 
 
 class HomeScreen extends Component {
@@ -14,7 +13,7 @@ class HomeScreen extends Component {
             // Sign-out successful.
             }).catch((error) => {
             // An error happened.
-            }).then(window.location.reload())
+            });
 
     }
 
