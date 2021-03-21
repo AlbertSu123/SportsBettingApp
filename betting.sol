@@ -20,12 +20,13 @@ contract Bet {
     address[] public team2Keys;
 
     Game public game;
+    Player public leader;
 
-    constructor(uint16 amount, uint8 team) {
-        Player memory leader = Player({
+    constructor(uint16 _amount, uint8 _team) {
+        leader = Player({
             _address: msg.sender,
-            amount: amount,
-            team: team
+            amount: _amount,
+            team: _team
         });
 
         game = Game({
@@ -34,16 +35,15 @@ contract Bet {
         });
 
         if (leader.team == 1) {
-            game.total1 += amount;
-            leader = team1[leader._address];
+            game.total1 += leader.amount;
+            team1[leader._address] = leader;
             team1Keys.push(leader._address);
         } else {
-            game.total2 += amount;
-            leader = team2[leader._address];
+            game.total2 += leader.amount;
+            team2[leader._address] = leader;
             team2Keys.push(leader._address);
         }
     }
-
 
     function payout(uint8 winner) public payable{ 
         uint16 amount;
