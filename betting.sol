@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity ^0.6.0;
-import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
+pragma solidity >= 0.5.0 < 0.6.0;
+import "github.com/provable-things/ethereum-api/provableAPI_0.5.sol";
 
 
-contract Bet is ChainlinkClient {
+contract Bet is usingProvable {
     struct Player {
         address _address; 
         uint256 amount;
@@ -22,25 +22,19 @@ contract Bet is ChainlinkClient {
     mapping(address => Player) public team2;
 
     address[] public team2Keys;
-    
-    address private oracle;
-    bytes32 private jobId;
-    uint256 private fee;
 
     Game public game;
     Player public leader;
-    uint256 winner;
+    string public winner;
     string team1String; 
     string team2String;
+    string gameID;
     
-    /**
-     * Network: Kovan
-     * Chainlink - 0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e
-     * Chainlink - 29fa9aa13bf1468788b7cc4a500a45b8
-     * Fee: 0.1 LINK
-     */
+    event LogNewProvableQuery(string description);
 
-    constructor(uint256 _amount, uint32 _team) internal {
+    
+
+    constructor(uint256 _amount, uint32 _team, string memory _gameID) public {
         leader = Player({
             _address: msg.sender,
             amount: _amount,
@@ -63,22 +57,26 @@ contract Bet is ChainlinkClient {
             team2Keys.push(leader._address);
         }
         
-        setPublicChainlinkToken();
-        oracle = 0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e;
-        jobId = "29fa9aa13bf1468788b7cc4a500a45b8";
-        fee = 0.1 * 10 ** 18; // 0.1 LINK
+       
+        gameID = _gameID;
     }
     
-    function requestGameData() public returns (bytes32 requestId) {
-        Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
-        request.add("get", "FOX BET URL"); //TODO: Change url to api call.
-        request.add("path", "JSON PATH"); //TODO: Path to winner in JSON query
-        return sendChainlinkRequestTo(oracle, request, fee);
-    }
-    
-    function fulfill(bytes32 _requestId, uint256 _winner) public recordChainlinkFulfillment(_requestId)
+    function __callback(
+        bytes32 _myid,
+        string memory _result
+    )
+        public
     {
-        winner = _winner;
+        require(msg.sender == provable_cbAddress());
+        winner = _result;
+    }
+
+    function update()
+        public
+        payable
+    {
+        emit LogNewProvableQuery("Provable query was sent, standing by for the answer...");
+        provable_query("URL", "json(https://api-nba-v1.p.rapidapi.com/games/live/).api.results.games.0"); 
     }
 
     function payout(uint32 winner) public payable{ 
@@ -88,7 +86,7 @@ contract Bet is ChainlinkClient {
             for (uint32 i = 0; i < team1Keys.length; i++) {
                 Player memory curr = team1[team1Keys[i]];
                 amount = curr.amount + curr.amount * ratio1;
-                payable(team1Keys[i]).transfer(amount);
+                address(uint160(team1Keys[i])).transfer(amount);
             }
         }
         else if (winner == 2) {
@@ -96,17 +94,17 @@ contract Bet is ChainlinkClient {
             for (uint32 i = 0; i < team2Keys.length; i++) {
                 Player memory curr = team2[team2Keys[i]];
                 amount = curr.amount + curr.amount * ratio2;
-                payable(team2Keys[i]).transfer(amount);
+                address(uint160(team2Keys[i])).transfer(amount);
             }
         }
         else {
             for (uint8 i = 0; i < team1Keys.length; i++) {
                 Player memory curr = team1[team1Keys[i]];
-                payable(team1Keys[i]).transfer(curr.amount);
+                address(uint160(team1Keys[i])).transfer(curr.amount);
             }
             for (uint8 i = 0; i < team2Keys.length; i++) {
                 Player memory curr = team2[team2Keys[i]];
-                payable(team2Keys[i]).transfer(curr.amount);
+                address(uint160(team2Keys[i])).transfer(curr.amount);
             }
         }
     }
