@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
 
-pragma solidity >=0.7.0 <0.8.0;
+pragma solidity ^0.6.0;
+import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 
-contract Bet {
+
+contract Bet is ChainlinkClient {
     struct Player {
         address _address; 
         uint256 amount;
@@ -20,11 +22,25 @@ contract Bet {
     mapping(address => Player) public team2;
 
     address[] public team2Keys;
+    
+    address private oracle;
+    bytes32 private jobId;
+    uint256 private fee;
 
     Game public game;
     Player public leader;
+    uint256 winner;
+    string team1String; 
+    string team2String;
+    
+    /**
+     * Network: Kovan
+     * Chainlink - 0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e
+     * Chainlink - 29fa9aa13bf1468788b7cc4a500a45b8
+     * Fee: 0.1 LINK
+     */
 
-    constructor(uint256 _amount, uint32 _team) {
+    constructor(uint256 _amount, uint32 _team) internal {
         leader = Player({
             _address: msg.sender,
             amount: _amount,
@@ -46,6 +62,23 @@ contract Bet {
             team2[leader._address] = leader;
             team2Keys.push(leader._address);
         }
+        
+        setPublicChainlinkToken();
+        oracle = 0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e;
+        jobId = "29fa9aa13bf1468788b7cc4a500a45b8";
+        fee = 0.1 * 10 ** 18; // 0.1 LINK
+    }
+    
+    function requestGameData() public returns (bytes32 requestId) {
+        Chainlink.Request memory request = buildChainlinkRequest(jobId, address(this), this.fulfill.selector);
+        request.add("get", "FOX BET URL"); //TODO: Change url to api call.
+        request.add("path", "JSON PATH"); //TODO: Path to winner in JSON query
+        return sendChainlinkRequestTo(oracle, request, fee);
+    }
+    
+    function fulfill(bytes32 _requestId, uint256 _winner) public recordChainlinkFulfillment(_requestId)
+    {
+        winner = _winner;
     }
 
     function payout(uint32 winner) public payable{ 
