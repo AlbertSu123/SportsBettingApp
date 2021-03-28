@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 
 pragma solidity >= 0.5.0 < 0.6.0;
-import "github.com/provable-things/ethereum-api/provableAPI_0.5.sol";
+// import "github.com/provable-things/ethereum-api/provableAPI_0.5.sol";
 
-
-contract Bet is usingProvable {
+contract Bet { // is usingProvable {
     struct Player {
         address _address; 
         uint256 amount;
@@ -25,19 +24,17 @@ contract Bet is usingProvable {
 
     Game public game;
     Player public leader;
-    string public winner;
+    string public _winner;
     string team1String; 
     string team2String;
     string gameID;
     
-    event LogNewProvableQuery(string description);
-
+    // event LogNewProvableQuery(string description);
     
-
-    constructor(uint256 _amount, uint32 _team, string memory _gameID) public {
+    constructor(uint32 _team, string memory _gameID) public payable {
         leader = Player({
             _address: msg.sender,
-            amount: _amount,
+            amount: msg.value,
             team: _team,
             exists: true
         });
@@ -57,31 +54,48 @@ contract Bet is usingProvable {
             team2Keys.push(leader._address);
         }
         
-       
         gameID = _gameID;
     }
     
-    function __callback(
-        bytes32 _myid,
-        string memory _result
-    )
-        public
-    {
-        require(msg.sender == provable_cbAddress());
-        winner = _result;
-    }
+    
+    // function __callback(bytes32 _myid, string memory _result) public {
+    //     require(msg.sender == provable_cbAddress());
+    //     _winner = _result;
+    // }
+    // function update() public payable {
+    //     emit LogNewProvableQuery("Provable query was sent, standing by for the answer...");
+    //     provable_query("URL", "json(https://api-nba-v1.p.rapidapi.com/games/live/).api.results.games.0"); 
+    // }
 
-    function update()
-        public
-        payable
-    {
-        emit LogNewProvableQuery("Provable query was sent, standing by for the answer...");
-        provable_query("URL", "json(https://api-nba-v1.p.rapidapi.com/games/live/).api.results.games.0"); 
+    function playerExists(address _address) internal view returns(bool) {
+        return team1[_address].exists || team2[_address].exists;
     }
-
+    function joinGame(uint32 team) public payable {
+        require(!playerExists(msg.sender));
+        require(msg.value > 0); //TODO: Add minimum bet amount
+        
+        Player memory bettor = Player({
+            _address: msg.sender,
+            amount: msg.value,
+            team: team,
+            exists: true});
+        
+        if (team == 1) {
+            game.total1 += msg.value;
+            team1[bettor._address] = bettor;
+            team1Keys.push(bettor._address);
+        } else {
+            game.total2 += msg.value;
+            team2[bettor._address] = bettor;
+            team2Keys.push(bettor._address);
+        }
+    }
+    
+    
     function payout(uint32 winner) public payable{ 
         uint256 amount;
         if (winner == 1) {
+            //TODO: This is doing integer division so look into this!!
             uint256 ratio1 = game.total2 / game.total1;
             for (uint32 i = 0; i < team1Keys.length; i++) {
                 Player memory curr = team1[team1Keys[i]];
@@ -106,31 +120,6 @@ contract Bet is usingProvable {
                 Player memory curr = team2[team2Keys[i]];
                 address(uint160(team2Keys[i])).transfer(curr.amount);
             }
-        }
-    }
-    
-    function playerExists(address _address) internal view returns(bool) {
-        return team1[_address].exists || team2[_address].exists;
-    }
-    
-    function joinGame(uint32 team) public payable {
-        require(!playerExists(msg.sender));
-        require(msg.value > 0);
-        
-        Player memory bettor = Player({
-            _address: msg.sender,
-            amount: msg.value,
-            team: team,
-            exists: true});
-        
-        if (team == 1) {
-            game.total1 += msg.value;
-            team1[bettor._address] = bettor;
-            team1Keys.push(bettor._address);
-        } else {
-            game.total2 += msg.value;
-            team2[bettor._address] = bettor;
-            team2Keys.push(bettor._address);
         }
     }
 }
