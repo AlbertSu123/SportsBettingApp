@@ -31,7 +31,7 @@ contract Bet is usingProvable {
     string gameID;
     
     event LogNewProvableQuery(string description);
-
+    event LogResult(string result);
     
 
     constructor(uint256 _amount, uint32 _team, string memory _gameID) public {
@@ -68,16 +68,42 @@ contract Bet is usingProvable {
         public
     {
         require(msg.sender == provable_cbAddress());
+        emit LogResult(_result);
         winner = _result;
     }
 
-    function update()
+     function request(
+        string memory _query,
+        string memory _method,
+        string memory _url,
+        string memory _kwargs
+    )
         public
         payable
     {
-        emit LogNewProvableQuery("Provable query was sent, standing by for the answer...");
-        provable_query("URL", "json(https://api.the-odds-api.com/v3/odds/?sport=upcoming&region=us&mkt=h2h&dateFormat=iso&apiKey=ec498c1049f9355fd0a91d41fedd66c9).data[1]"); 
+        if (provable_getPrice("computation") > address(this).balance) {
+            emit LogNewProvableQuery("Provable query was NOT sent, please add some ETH to cover for the query fee");
+        } else {
+            emit LogNewProvableQuery("Provable query was sent, standing by for the answer...");
+            provable_query("computation",
+                [_query,
+                _method,
+                _url,
+                _kwargs]
+            );
+        }
     }
+    
+    function requestCustomHeaders()
+        public
+        payable
+    {
+        request("json(QmdKK319Veha83h6AYgQqhx9YRsJ9MJE7y33oCXyZ4MqHE)",
+                "GET",
+                "https://livescore6.p.rapidapi.com/matches/v2/list-live?Category=basketball",
+                "{'headers': {'x-rapidapi-key': '78ea5e7bfdmshae8e2447cc43203p1d9630jsn00e54f133806', 'x-rapidapi-host': 'api-nba-v1.p.rapidapi.com'}}");
+    }
+
 
     function payout(uint32 winner) public payable{ 
         uint256 amount;
