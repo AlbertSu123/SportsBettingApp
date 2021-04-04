@@ -1,14 +1,22 @@
 const { expect } = require("chai");
+const assert = require('assert');
 
-describe("Greeter", function() {
-  it("Should return the new greeting once it's changed", async function() {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    
-    await greeter.deployed();
-    expect(await greeter.greet()).to.equal("Hello, world!");
-
-    await greeter.setGreeting("Hola, mundo!");
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
+let owner;
+let Betting;
+let contract;
+beforeEach(async function () {
+    [owner] = await ethers.getSigners(); 
+    Betting = await ethers.getContractFactory("Bet"); //Name of Contract
+    contract = await Betting.deploy(100000000000000, 1); //Runs constructor of contract
   });
-});
+
+describe("Construtor", function() {
+  it("Contract leader is set properly ", async function() {
+    // const ownerBalance = await contract.balanceOf(owner.address);
+    assert.ok(owner.address)
+    expect(await contract.AmountOne()).to.equal(100000000000000);
+    expect(await contract.AmountTwo()).to.equal(0);
+    assert(await contract.playerExists(owner.address))
+  });
+}); 
+

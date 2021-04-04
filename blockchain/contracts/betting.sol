@@ -40,7 +40,15 @@ contract Bet {
         }
     }
 
-    function playerExists(address _addy) internal view returns(bool) {
+    function AmountOne() public view returns (uint256) {
+        return total1;
+    }
+
+    function AmountTwo() public view returns (uint256) {
+        return total2;
+    }
+
+    function playerExists(address _addy) public view returns(bool) {
         for (uint8 i = 0; i < addy1.length; i++) {
             if (addy1[i] == _addy) {
                 return true;
