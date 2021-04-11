@@ -1,28 +1,12 @@
-// https://hardhat.org/tutorial/testing-contracts.html
-const { expect } = require("chai");
-const assert = require('assert');
+describe("Greeter", function() {
+  it("Should return the new greeting once it's changed", async function() {
+    const Greeter = await ethers.getContractFactory("Greeter");
+    const greeter = await Greeter.deploy("Hello, world!");
 
+    await greeter.deployed();
+    expect(await greeter.greet()).to.equal("Hello, world!");
 
-let owner, player1, player2;
-let Betting;
-let contract;
-
-//Runs before each test (deploys a new contract each time)
-beforeEach(async function () {
-    [owner, player1, player2] = await ethers.getSigners(); //Gets list of players you can test with
-    Betting = await ethers.getContractFactory("Bet"); //Bet is name of Contract
-    contract = await Betting.deploy(100000000000000, 1); //Runs constructor of contract
+    await greeter.setGreeting("Hola, mundo!");
+    expect(await greeter.greet()).to.equal("Hola, mundo!");
   });
-
-describe("Construtor", function() {
-  it("Contract leader address exists and leader object exists", async function() {
-    assert.ok(owner.address)
-    assert(await contract.playerExists(owner.address))
-  });
-  it("Team 1 should have some ether and team 2 should have none", async function() {
-    expect(await contract.AmountOne()).to.equal(100000000000000);
-    expect(await contract.AmountTwo()).to.equal(0);
-  });
-}); 
-
-
+});

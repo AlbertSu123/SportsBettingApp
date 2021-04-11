@@ -6,6 +6,7 @@
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.2.0",
     "hardhat": "^2.1.2",
-    "hardhat-gas-reporter": "^1.0.4"
+    "hardhat-gas-reporter": "^1.0.4",
+    "truffle-wallet-provider": "0.0.5"
   }
 }
