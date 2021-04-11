@@ -18,11 +18,11 @@ contract Bet {
         uint32 team;
     }
 
-    constructor(uint256 _amount, uint32 _team) {
-        leader = Player({
-            amount: _amount,
-            team: _team
-        });
+    constructor(/* uint256 _amount, uint32 _team */) public {
+        // leader = Player({
+        //     amount: _amount,
+        //     team: _team
+        // });
 
         total1 = 0;
         total2 = 0;

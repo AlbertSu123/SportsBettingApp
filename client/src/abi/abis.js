@@ -2,18 +2,7 @@ export const betAbi = [
 {
     "abi": [
     {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint32",
-          "name": "_team",
-          "type": "uint32"
-        }
-      ],
+      "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "constructor"
@@ -282,5 +271,5 @@ export const betAbi = [
       "stateMutability": "payable",
       "type": "function"
     }
-    ]
+  ]
 }]
