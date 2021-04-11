@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.5.16;
+pragma solidity >0.5.16;
 import "hardhat/console.sol";
 
 
