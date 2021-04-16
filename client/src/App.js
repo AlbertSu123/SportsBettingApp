@@ -5,35 +5,36 @@ import React, { useState } from 'react';
 import Web3 from 'web3';
 import { betAbi } from './abi/abis';
 const web3 = new Web3(Web3.givenProvider);
-const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D'
-const contract = new web3.eth.Contract(betAbi, contractAddr);
 
 function App() {
-  const [number, setNumber] = useState(0);
-  const [getNumber, setGetNumber] = useState('0x00');
-  const handleGet = async (e) => {
+  // const [number, setNumber] = useState(0);
+  const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D'
+  const bet = new web3.eth.Contract(betAbi, contractAddr);
+  const [getAmountOne, setAmountOne] = useState('0x00');
+  
+  const handleAmountOne = async(e) => {
     e.preventDefault();
-    const result = await contract.methods.get().call();
-    setGetNumber(result);
+    const result = await bet.methods.AmountOne.call();
+    setAmountOne(result);
     console.log(result);
-  }
-  const handleSet = async (e) => {
-    e.preventDefault();    
-    const accounts = await window.ethereum.enable();
-    const account = accounts[0];
-    const gas = await contract.methods.set(number)
-                        .estimateGas();
-    const result = await contract.methods.set(number).send({
-      from: account,
-      gas 
-    })
-    console.log(result);
-  }
+  };
+  // const handleSet = async (e) => {
+  //   e.preventDefault();    
+  //   const accounts = await window.ethereum.enable();
+  //   const account = accounts[0];
+  //   const gas = await contract.methods.set(number)
+  //                       .estimateGas();
+  //   const result = await contract.methods.set(number).send({
+  //     from: account,
+  //     gas 
+  //   })
+  //   console.log(result);
+  // }
 
   return (
       <div className="App">
       <header className="App-header">
-        <form onSubmit={handleSet}>
+        {/* <form onSubmit={handleSet}>
           <label>
             Set Number:
             <input 
@@ -43,14 +44,14 @@ function App() {
               onChange={ e => setNumber(e.target.value) } />
           </label>
           <input type="submit" value="Set Number" />
-        </form>
+        </form> */}
         <br/>
         <button
-          onClick={handleGet}
+          onClick={handleAmountOne}
           type="button" > 
-          Get Number 
+          Get Team 1 Total 
         </button>
-        { getNumber }
+        { getAmountOne }
       </header>
     </div> 
   );
