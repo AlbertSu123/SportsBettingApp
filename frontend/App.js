@@ -1,16 +1,18 @@
 import 'react-native-gesture-handler';
-
+import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
-import { NativeRouter, Route, Link } from "react-router-native";
-import Routes from "./src/routes/RoutesConfig"
-
-
+import AppNavigator from "./src/navigation/Navigation"
+import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import {decode, encode} from 'base-64'
 import { firebase } from './src/firebase/config'
-if (!global.btoa) {  global.btoa = encode }
-if (!global.atob) { global.atob = decode }
+import { createStackNavigator } from '@react-navigation/stack';
+import HomeScreen from './src/screens/HomeScreen/HomeScreen';
+import LoginScreen from './src/screens/LoginScreen/LoginScreen';
+import RegistrationScreen from './src/screens/RegistrationScreen/RegistrationScreen';
+import Tabbar from "./src/Tabbar"
+import "./App.css"
+
+
 
 const Stack = createStackNavigator();
 
@@ -19,11 +21,6 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
 
-  // if (loading) {	
-  //   return (	
-  //     <></>	
-  //   )	
-  // }
 
   useEffect(() => {
     const usersRef = firebase.firestore().collection('users');
@@ -46,15 +43,31 @@ export default function App() {
     });
   }, []);
 
+
+  console.log(user)
   return (
-    <NativeRouter>
-          {Routes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                component={route.component}
-              />
-            ))}
-    </NativeRouter>
+    <div className="App">
+      <NavigationContainer>
+        <Stack.Navigator>
+          { user ? (
+            <Stack.Screen name="Home">
+              {props => <HomeScreen {...props} extraData={user} />}
+            </Stack.Screen>
+          ) : (
+            <>
+              <Stack.Screen name="Login" component={LoginScreen} />
+              {/* <Stack.Screen name="Registration" component={RegistrationScreen} /> */}
+            </>
+          )}
+      </Stack.Navigator>
+    </NavigationContainer>
+
+
+        <div className="tabbar">
+          <Tabbar />
+        </div>
+    </div>
+    
+
   );
 }

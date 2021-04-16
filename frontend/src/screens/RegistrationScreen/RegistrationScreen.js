@@ -27,7 +27,7 @@ export default function RegistrationScreen({navigation}) {
                     alert(error)
             });
         }
-
+        console.log("sdasd")
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
