@@ -1,0 +1,12 @@
+.App {
+    box-sizing: border-box;
+    width: 100vw;
+    overflow-x: hidden;
+    background: #1E5FDC;
+}
+
+.tabbar {
+    position: fixed;
+    bottom: 0;
+    width: 100vw
+}
