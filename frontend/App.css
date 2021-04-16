@@ -1,0 +1,25 @@
+.App {
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    background: #1E5FDC;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+}
+
+.AppContent {
+    padding: 5%;
+}
+
+.title {
+    font-size: 3rem;
+    text-align: center;
+}
+
+.tabbar {
+    position: fixed;
+    bottom: 0;
+    width: 100vw
+}

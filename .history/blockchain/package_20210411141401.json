@@ -1,0 +1,15 @@
+{
+  "name": "hardhat-project",
+  "dependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "chai": "^4.3.4",
+    "ethereum-waffle": "^3.3.0",
+    "ethers": "^5.1.0",
+    "hardhat-gas-reporter": "^1.0.4",
+    "truffle-wallet-provider": "0.0.5"
+  },
+  "devDependencies": {
+    "hardhat": "^2.1.2"
+  }
+}
