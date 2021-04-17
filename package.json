@@ -10,6 +10,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.3",
     "react-native-reanimated": "^2.0.0",
     "react-native-safe-area-context": "^3.2.0",
-    "react-native-screens": "^2.18.1"
+    "react-native-screens": "^2.18.1",
+    "web3-react": "^5.0.5"
   }
 }
