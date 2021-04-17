@@ -15,21 +15,39 @@ export default function RegistrationScreen({navigation}) {
     }
 
     const onRegisterPress = () => {
-            if (password !== confirmPassword) {
-                alert("Passwords don't match.")
-                return
-            }
-            firebase
-                .auth()
-                .createUserWithEmailAndPassword(email, password)
-                .then((response) => alert(response))
-                .catch((error) => {
-                    alert(error)
-            });
+        if (password !== confirmPassword) {
+            alert("Passwords don't match.")
+            return
         }
-        console.log("sdasd")
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then((response) => {
+                const uid = response.user.uid
+                const data = {
+                    id: uid,
+                    email,
+                    fullName,
+                };
+                const usersRef = firebase.firestore().collection('users')
+                usersRef
+                    .doc(uid)
+                    .set(data)
+                    .then(() => {
+                        navigation.navigate('Home', {user: data})
+                    })
+                    .catch((error) => {
+                        alert(error)
+                    });
+            })
+            .catch((error) => {
+                alert(error)
+        });
+    }
+
     return (
         <View style={styles.container}>
+            {"register"}
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: '100%' }}
                 keyboardShouldPersistTaps="always">

@@ -1,49 +1,47 @@
 import React, {Component} from 'react'
 import { Text, View, TextInput, TouchableOpacity} from 'react-native'
 import { firebase } from '../../firebase/config'
-
 import Web3Data from './Web3data.js';
+import "./Home.css"
+import Web3 from 'web3';
+import styles from "./styles"
 
 
-import { useWeb3Injected, useWeb3Network } from '@openzeppelin/network/lib/react';
-const infuraProjectId = 'dc680c95a7eb4f79b01b29cad11003e1';
 
 
+class HomeScreen extends Component {
 
-function HomeScreen() {
-
-
-    function logout() {
-        firebase.auth().signOut().then(() => {
-            // Sign-out successful.
-            }).catch((error) => {
-            // An error happened.
-            }).then(window.location.reload())
-
+    constructor(props) {
+        super(props)
+        this.state = {
+        account: '',
+        taskCount: 0,
+        tasks: []
+        }
+        const infuraProjectId = 'dc680c95a7eb4f79b01b29cad11003e1';
     }
 
-    const web3Context = useWeb3Injected(`wss://mainnet.infura.io/ws/v3/${infuraProjectId}`);
-    const { networkId, networkName, providerName } = web3Context;
+    async loadBlockchainData() {
+        const web3 = new Web3(Web3.givenProvider)
+        const accounts = await web3.eth.getAccounts()
+        this.setState({ account: accounts[0] })
+    }
 
-    console.log("sdasd")
-    return (
-        <View>
-            <Text>Home Screen</Text>
+    componentWillMount() {
+        this.loadBlockchainData()
+    }
     
-        <div>
-        Network: {networkId ? `${networkId} – ${networkName}` : 'No connection'}
-        </div>
-        <Web3Data title="Web3 Data" web3Context={web3Context} />
+    render() {
     
-            
-                <TouchableOpacity
-    
-                    onPress={() => logout()}>
-                    <Text>Log Out</Text>
-                </TouchableOpacity>
-        </View>
-    )
-    
+        return (
+            <View style={styles.container}>
+                <Text>Home Screen</Text>
+                <Text>{this.state.account}</Text>
+
+            </View>
+        )
+        
+    }
 }
 
 export default HomeScreen
