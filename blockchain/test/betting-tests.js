@@ -11,7 +11,7 @@ let contract;
 beforeEach(async function () {
     [owner, player1, player2] = await ethers.getSigners(); //Gets list of players you can test with
     Betting = await ethers.getContractFactory("Bet"); //Bet is name of Contract
-    contract = await Betting.deploy(100000000000000, 1); //Runs constructor of contract
+    contract = await Betting.deploy(); //Runs constructor of contract
   });
 
 describe("Construtor", function() {

@@ -47,7 +47,8 @@ export default function App() {
   console.log(user)
   return (
     <div className="App">
-      <NavigationContainer>
+      <HomeScreen />
+      {/* <NavigationContainer>
         <Stack.Navigator>
           { user ? (
             <Stack.Screen name="Home">
@@ -56,11 +57,11 @@ export default function App() {
           ) : (
             <>
               <Stack.Screen name="Login" component={LoginScreen} />
-              {/* <Stack.Screen name="Registration" component={RegistrationScreen} /> */}
+              <Stack.Screen name="Registration" component={RegistrationScreen} />
             </>
           )}
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer> */}
 
 
         <div className="tabbar">
