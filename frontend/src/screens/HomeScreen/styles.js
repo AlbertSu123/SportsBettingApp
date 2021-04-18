@@ -6,5 +6,8 @@ export default StyleSheet.create({
         minHeight: "100vh"
         
     },
+    logoutButton: {
+        width: 20,
+    }
     
 })
