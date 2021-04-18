@@ -1,4 +1,4 @@
-pragma solidity >0.5.0;
+pragma solidity > 0.6.1 < 0.7.0;
 
 // contract Betting {
 //     address payable public owner;
