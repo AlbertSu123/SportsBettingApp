@@ -25,6 +25,7 @@ create table group_bets (
    roundid INT NOT NULL AUTO_INCREMENT,
    team1 VARCHAR(25) NOT NULL,
    team2 VARCHAR(25) NOT NULL,
+   team_ratios FLOAT(10, 2) NOT NULL,
    team1_total FLOAT(10, 2) NOT NULL,
    team2_total FLOAT(10, 2) NOT NULL,
 );
