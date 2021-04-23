@@ -627,7 +627,7 @@
     "safe-buffer" "^5.1.1"
     "util.promisify" "^1.0.0"
 
-"@nomiclabs/hardhat-ethers@^2.0.2":
+"@nomiclabs/hardhat-ethers@^2.0.0", "@nomiclabs/hardhat-ethers@^2.0.2":
   "integrity" "sha512-6quxWe8wwS4X5v3Au8q1jOvXYEPkS1Fh+cME5u6AwNdnI4uERvPlVjlgRWzpnb+Rrt1l/cEqiNRH9GlsBMSDQg=="
   "resolved" "https://registry.npmjs.org/@nomiclabs/hardhat-ethers/-/hardhat-ethers-2.0.2.tgz"
   "version" "2.0.2"
@@ -1909,8 +1909,8 @@
   "resolved" "https://registry.npmjs.org/bignumber.js/-/bignumber.js-9.0.1.tgz"
   "version" "9.0.1"
 
-"bignumber.js@git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2":
-  "resolved" "git+ssh://git@github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2"
+"bignumber.js@git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2", "bignumber.js@git+https://github.com/debris/bignumber.js#master":
+  "version" "2.0.7"
 
 "binary-extensions@^2.0.0":
   "integrity" "sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA=="
@@ -2412,9 +2412,10 @@
   "resolved" "https://registry.npmjs.org/cli-table3/-/cli-table3-0.5.1.tgz"
   "version" "0.5.1"
   dependencies:
-    "colors" "^1.1.2"
     "object-assign" "^4.1.0"
     "string-width" "^2.1.1"
+  optionalDependencies:
+    "colors" "^1.1.2"
 
 "cliui@^3.2.0":
   "integrity" "sha1-EgYBU3qRbSmUD5NNo7SNWFo5IT0="
@@ -3396,7 +3397,7 @@
     "underscore" "^1.8.3"
     "web3" "^1.0.0-beta.34"
 
-"ethereum-waffle@^3.3.0":
+"ethereum-waffle@^3.2.0", "ethereum-waffle@^3.3.0":
   "integrity" "sha512-4xm3RWAPCu5LlaVxYEg0tG3L7g5ovBw1GY/UebrzZ+OTx22vcPjI+bvelFlGBpkdnO5yOIFXjH2eK59tNAe9IA=="
   "resolved" "https://registry.npmjs.org/ethereum-waffle/-/ethereum-waffle-3.3.0.tgz"
   "version" "3.3.0"
@@ -3424,7 +3425,7 @@
     "ethereumjs-util" "^4.3.0"
 
 "ethereumjs-abi@git+https://github.com/ethereumjs/ethereumjs-abi.git":
-  "resolved" "git+ssh://git@github.com/ethereumjs/ethereumjs-abi.git#1a27c59c15ab1e95ee8e5c4ed6ad814c49cc439e"
+  "version" "0.6.8"
   dependencies:
     "bn.js" "^4.11.8"
     "ethereumjs-util" "^6.0.0"
@@ -3772,7 +3773,7 @@
     "uuid" "2.0.1"
     "xmlhttprequest" "1.8.0"
 
-"ethers@^5.0.0", "ethers@^5.0.1", "ethers@^5.0.2", "ethers@^5.1.0":
+"ethers@^5.0.0", "ethers@^5.0.1", "ethers@^5.1.0":
   "integrity" "sha512-2L6Ge6wMBw02FlRoCLg4E0Elt3khMNlW6ULawa10mMeeZToYJ5+uCfiuTuB+XZ6om1Y7wuO9ZzezP8FsU2M/+g=="
   "resolved" "https://registry.npmjs.org/ethers/-/ethers-5.1.0.tgz"
   "version" "5.1.0"
@@ -4427,7 +4428,7 @@
     "eth-gas-reporter" "^0.2.20"
     "sha1" "^1.1.1"
 
-"hardhat@^2.1.2":
+"hardhat@^2.0.0", "hardhat@^2.0.2", "hardhat@^2.1.2":
   "integrity" "sha512-42iOheDsDl6Gr7sBfpA0S+bQUIcXSDEUrrqmnFEcBHx9qBoQad3s212y2ODmmkdLt+PqqTM+Mq8N3bZDTdjoLg=="
   "resolved" "https://registry.npmjs.org/hardhat/-/hardhat-2.1.2.tgz"
   "version" "2.1.2"
@@ -5238,15 +5239,13 @@
   "integrity" "sha1-NzaitCi4e72gzIO1P6PWM6NcKug="
   "resolved" "https://registry.npmjs.org/jsonfile/-/jsonfile-2.4.0.tgz"
   "version" "2.4.0"
-  dependencies:
+  optionalDependencies:
     "graceful-fs" "^4.1.6"
 
 "jsonfile@^4.0.0":
   "integrity" "sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss="
   "resolved" "https://registry.npmjs.org/jsonfile/-/jsonfile-4.0.0.tgz"
   "version" "4.0.0"
-  dependencies:
-    "graceful-fs" "^4.1.6"
   optionalDependencies:
     "graceful-fs" "^4.1.6"
 
@@ -5332,7 +5331,7 @@
   "integrity" "sha1-QIhDO0azsbolnXh4XY6W9zugJDk="
   "resolved" "https://registry.npmjs.org/klaw/-/klaw-1.3.1.tgz"
   "version" "1.3.1"
-  dependencies:
+  optionalDependencies:
     "graceful-fs" "^4.1.9"
 
 "lcid@^1.0.0":
@@ -6539,6 +6538,11 @@
   dependencies:
     "asap" "~2.0.6"
 
+"provable-eth-api@^0.5.0-npmfix":
+  "integrity" "sha512-9qWihRgtMjrS900xwYzTzVjl6c9R8r22F6v9yn/z2UjYrjGc2Ak2T4/iHFr3KWIQYLUc4U5NhnOpLWiCZOoQ6A=="
+  "resolved" "https://registry.npmjs.org/provable-eth-api/-/provable-eth-api-0.5.0-npmfix.tgz"
+  "version" "0.5.0-npmfix"
+
 "proxy-addr@~2.0.5":
   "integrity" "sha512-dh/frvCBVmSsDYzw6n926jv974gddhkFPfiN8hPOi30Wax25QZyZEGveluCgliBnqmuM+UJmBErbAUFIoDbjOw=="
   "resolved" "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.6.tgz"
@@ -6914,7 +6918,7 @@
     "stealthy-require" "^1.1.1"
     "tough-cookie" "^2.3.3"
 
-"request@^2.67.0", "request@^2.79.0", "request@^2.85.0", "request@^2.88.0":
+"request@^2.34", "request@^2.67.0", "request@^2.79.0", "request@^2.85.0", "request@^2.88.0":
   "integrity" "sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw=="
   "resolved" "https://registry.npmjs.org/request/-/request-2.88.2.tgz"
   "version" "2.88.2"
@@ -8717,7 +8721,7 @@
   "resolved" "https://registry.npmjs.org/web3/-/web3-0.16.0.tgz"
   "version" "0.16.0"
   dependencies:
-    "bignumber.js" "git+https://github.com/debris/bignumber.js.git#94d7146671b9719e00a09c29b01a691bc85048c2"
+    "bignumber.js" "git+https://github.com/debris/bignumber.js#master"
     "crypto-js" "^3.1.4"
     "utf8" "^2.1.1"
     "xmlhttprequest" "*"
