@@ -27,16 +27,6 @@ class HomeScreen extends Component {
         const accounts = await web3.eth.getAccounts()
         this.setState({ account: accounts[0] })
     }
-    function validateForm() {
-        return email.length > 0 && password.length > 0;
-    }
-    function submitRequest() {
-
-    }
-
-    function handleBetSubmit(event) {
-        event.preventDefault();
-    }
 
     componentWillMount() {
         this.loadBlockchainData()
