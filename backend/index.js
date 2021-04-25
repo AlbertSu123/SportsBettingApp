@@ -65,7 +65,9 @@ rl.question("Create new user (newuser), Create new bet round (newround), Attach 
 					console.log("connected to database");
 					
 					var sql = `INSERT INTO betting_rounds (team1, team2, team1_total, team2_total) VALUES ('${team1_name}', '${team2_name}', '0', '0')`;
-				
+					var sql = `INSERT INTO group_bets (team1, team2, bet_value, bet_time, team1_total, team2_total,team1_ratio, team2_ratio) VALUES ('${team1_name}', '${team2_name}', '0', '0')`;
+
+					
 					connection.query(sql, function (err, result) {
 						if (err) {
 							console.error("database connection failed: " + err.stack);
