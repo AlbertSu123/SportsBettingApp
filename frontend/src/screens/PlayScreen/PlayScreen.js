@@ -16,12 +16,26 @@ class PlayScreen extends Component {
         account: '',
         taskCount: 0,
         tasks: [],
-        amount: 0
+        amount: 0,
+        value: 'Team 1'
         }
+
+        this.handleTeamChange = this.handleTeamChange.bind(this);
+        this.handleTeamSubmit = this.handleTeamSubmit.bind(this);
 
         const infuraProjectId = 'dc680c95a7eb4f79b01b29cad11003e1';
         this.logOut = this.logOut.bind(this)
     }
+
+    handleTeamChange(event) {
+        this.setState({value: event.target.value});
+    }
+
+    handleTeamSubmit(event) {
+        alert('Your chosen team is: ' + this.state.value);
+        event.preventDefault();
+    }
+
     
 
     /* If this is not working for demo, comment the loadBlockchainData() and componentWillMount() function out */
@@ -75,6 +89,14 @@ class PlayScreen extends Component {
                     autoCapitalize="none"
                     />
                     </Text>
+                    <Text style={styles.AccountInfo}>{`Which team would you like to bet for?`}  </Text>
+                    <form onSubmit={this.handleTeamSubmit}>
+                        <select value={this.state.value} onChange={this.handleTeamChange}>
+                            <option value="Team 1">Team 1</option>
+                            <option value="Team 2">Team 2</option>
+                        </select>
+                        <input type="submit" value="Submit" />
+                    </form>
                 </View>
             </View> 
         )
