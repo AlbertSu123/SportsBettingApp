@@ -29,8 +29,8 @@ create table group_bets (
    bet_time DATETIME NOT NULL,
    team1_total FLOAT(10, 2) NOT NULL,
    team2_total FLOAT(10, 2) NOT NULL,
-   team_ratio1 FLOAT(10, 2) NOT NULL,
-   team_ratio2 FLOAT(10, 2) NOT NULL,
+   team1_ratio FLOAT(10, 2) NOT NULL,
+   team2_ratio FLOAT(10, 2) NOT NULL,
 );
 
 /* When bet is made it will be added to group_bets with the bet_time stored. The totals for each team will then be updated and a new ration created. The frontend
