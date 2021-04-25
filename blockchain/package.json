@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "test": "hardhat test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
   "name": "hardhat-project",
   "dependencies": {
     "@chainlink/contracts": "^0.1.7",
@@ -8,6 +13,7 @@
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.3.0",
     "hardhat": "^2.1.2",
+    "hardhat-deploy": "^0.7.5",
     "hardhat-gas-reporter": "^1.0.4",
     "provable-eth-api": "^0.5.0-npmfix",
     "truffle-wallet-provider": "0.0.5"
