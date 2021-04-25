@@ -25,7 +25,14 @@ create table group_bets (
    roundid INT NOT NULL AUTO_INCREMENT,
    team1 VARCHAR(25) NOT NULL,
    team2 VARCHAR(25) NOT NULL,
-   team_ratios FLOAT(10, 2) NOT NULL,
+   bet_value FLOAT(10, 2) NOT NULL,
+   bet_time DATETIME NOT NULL,
    team1_total FLOAT(10, 2) NOT NULL,
    team2_total FLOAT(10, 2) NOT NULL,
+   team_ratio1 FLOAT(10, 2) NOT NULL,
 );
+
+/* When bet is made it will be added to group_bets with the bet_time stored. The totals for each team will then be updated and a new ration created. The frontend
+can create the graph by simply pulling the ratio for each team respectively and the bet_time, with the bet_time on the x-axis and the ratio on the y. In terms of
+optimum computation time the optimum would be to calculate the totals in the backend (so each calculating is just one extra addition rather than summing every bet
+in the front-end), and calculating the ratios in the frontend. For now I will compute the calculations in the backend. */
