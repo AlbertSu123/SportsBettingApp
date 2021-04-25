@@ -42,23 +42,22 @@ describe("joinGame", function() {
     assert.ok(owner.address);
     assert(await contract.playerExists(owner.address));
   });
-  it("2 players: Total1 is incremented and player1 joins the game", async function() {
+  it("2 players: Total1, Total2 are incremented and player1, player2 join the game", async function() {
     const initTotal1 = await contract.AmountOne();
-    await contract.connect(player1).joinGame(player1.team);
-    assert(await contract.playerExists(player1.address))
-    //expect(await contract.AmountOne()).to.be.gt(initTotal1);
-    expect(await contract.AmountOne()).to.equal(initTotal1 + player1.getBalance());
-    expect(player1.team[player1.address].team.to.equal(player1.team); 
-  });
-  it("2 players: Total2 is incremented and player2 joins the game", async function() {
     const initTotal2 = await contract.AmountTwo();
+    await contract.connect(player1).joinGame(player1.team);
     await contract.connect(player2).joinGame(player2.team);
+    assert(await contract.playerExists(player1.address));
     assert(await contract.playerExists(player2.address));
+
+    //expect(await contract.AmountOne()).to.be.gt(initTotal1);
     //expect(await contract.AmountTwo()).to.be.gt(initTotal2);
+
+    expect(await contract.AmountOne()).to.equal(initTotal1 + player1.getBalance());
     expect(await contract.AmountTwo()).to.equal(initTotal2 + player2.getBalance());
-    expect(player1.team[player1.address].team.to.equal(player1.team));
   });
-  it("4 players: Total1 is incremented, player01 and joins the game", async function() {
+
+  it("4 players: Total1, T is incremented, player01 and player02 join the game", async function() {
     const initTotal2 = await contract.AmountTwo();
     await contract.connect(player2).joinGame(player2.team);
     assert(await contract.playerExists(player2.address));
