@@ -65,7 +65,7 @@ rl.question("Create new user (newuser), Create new bet round (newround), Attach 
 					console.log("connected to database");
 					
 					var sql = `INSERT INTO betting_rounds (team1, team2, team1_total, team2_total) VALUES ('${team1_name}', '${team2_name}', '0', '0')`;
-					var sql = `INSERT INTO group_bets (team1, team2, bet_value, bet_time, team1_total, team2_total,team1_ratio, team2_ratio) VALUES ('${team1_name}', '${team2_name}', '0', '0')`;
+					var sql1 = `INSERT INTO group_bets (team1, team2, bet_value, bet_time, team1_total, team2_total) VALUES ('${team1_name}', '${team2_name}', '0', new Date(Date.time()).toISOString().slice(0, 19).replace('T', ' '),'0', '0')`;
 
 					
 					connection.query(sql, function (err, result) {
@@ -104,7 +104,11 @@ rl.question("Create new user (newuser), Create new bet round (newround), Attach 
 								
 								var sql = `UPDATE betting_rounds SET ${teamid}_total = ${teamid}_total + ${amount} WHERE roundid=${roundid}`;
 								var sql1 = `INSERT INTO user_bets (userid, roundid, team_choice, bet_total) VALUES ('${userid}', '${roundid}', '${teamid}', '${amount}')`;
-
+									if (teamid == "team1") {
+										var sql2 = `INSERT INTO group_bets (team1, team2, bet_value, bet_time, team1_total, team2_total) VALUES ('${team1_name}', '${team2_name}','${amount}' , new Date(Date.time()).toISOString().slice(0, 19).replace('T', ' '),'${amount}+team1_total', '0')`;
+									} else {
+										var sql2 = `INSERT INTO group_bets (team1, team2, bet_value, bet_time, team1_total, team2_total) VALUES ('${team1_name}', '${team2_name}', '${amount}', new Date(Date.time()).toISOString().slice(0, 19).replace('T', ' '),'0', '${amount}+team1_total')`;
+									}	
 								connection.query(sql, function (err, result) {
 									if (err) {
 										console.error("database write failed: " + err.stack);
