@@ -1,11 +1,25 @@
 {
+  "scripts": {
+    "test": "hardhat test",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
   "name": "hardhat-project",
   "dependencies": {
-    "@nomiclabs/hardhat-ethers": "^2.0.0",
+    "@chainlink/contracts": "^0.1.7",
+    "@chainlink/token": "^1.1.0",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts": "^3.4.0-rc.0",
     "chai": "^4.3.4",
-    "ethereum-waffle": "^3.2.0",
+    "ethereum-waffle": "^3.3.0",
     "hardhat": "^2.1.2",
-    "hardhat-gas-reporter": "^1.0.4"
+    "hardhat-deploy": "^0.7.5",
+    "hardhat-gas-reporter": "^1.0.4",
+    "provable-eth-api": "^0.5.0-npmfix",
+    "truffle-wallet-provider": "0.0.5"
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.2",
+    "ethers": "^5.1.0"
   }
 }
