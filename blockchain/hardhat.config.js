@@ -14,14 +14,14 @@ task("accounts", "Prints the list of accounts", async () => {
   }
 });
 
-task("oracle", "Prints the result from oracle query", async () => {
-  const [owner, addr1, addr2] = await ethers.getSigners();
-  const Token = await ethers.getContractFactory("ExampleContract");
-  const hardhatToken = await Token.deploy();
+// task("oracle", "Prints the result from oracle query", async () => {
+//   const [owner, addr1, addr2] = await ethers.getSigners();
+//   const Token = await ethers.getContractFactory("ExampleContract");
+//   const hardhatToken = await Token.deploy();
 
-  await hardhatToken.connect(addr1).updatePrice();
+//   await hardhatToken.connect(addr1).updatePrice();
 
-});
+// });
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -30,10 +30,23 @@ task("oracle", "Prints the result from oracle query", async () => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
+  defaultNetwork: "hardhat",
+  networks: {
+    hardhat: {
+      forking: {
+        url: process.env.MAINNET_RPC_URL
+      }
+    },
+    kovan: {
+      url: process.env.KOVAN_RPC_URL,
+      accounts: {
+        mnemonic: process.env.MNEMONIC
+      }
+    }
+  },
   solidity: "0.6.6",
     gasReporter: {
       currency: 'CHF',
       gasPrice: 21
-    }
+    },
 };
-

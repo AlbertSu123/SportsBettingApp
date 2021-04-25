@@ -39,7 +39,7 @@ describe("Construtor", function() {
     assert(await contract.playerExists(owner.address))
   });
   it("Team 1 should have some ether and team 2 should have none", async function() {
-    expect(await contract.AmountOne()).to.equal(10);
+    expect(await contract.AmountOne()).to.equal(0);
     expect(await contract.AmountTwo()).to.equal(0);
   });
 }); 
