@@ -97,6 +97,12 @@ class PlayScreen extends Component {
                         </select>
                         <input type="submit" value="Submit" />
                     </form>
+                    <Text>{'\n'}</Text>
+                    <Button
+                        title="Payout"
+                        color="#36c464"
+                        onPress={() => alert('Payout Received!')}
+                    />
                 </View>
             </View> 
         )
