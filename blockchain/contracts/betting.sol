@@ -1,5 +1,7 @@
 //SPDX-License-Identifier: GPL-3.0
-pragma solidity > 0.6.1 < 0.7.0;
+// pragma solidity > 0.6.1 < 0.7.0;
+pragma solidity > 0.5.15 < 0.7.0;
+
 
 contract Bet {
     uint256 public minimumBet;
@@ -27,7 +29,7 @@ contract Bet {
         total1 = 0;
         total2 = 0;
         minimumBet = 0; //Figure out actual minimum bet
-        leader_addy = payable(msg.sender);
+        leader_addy = address(uint160(msg.sender));
 
         // if (leader.team == 1) {
         //     total1 += leader.amount;
@@ -75,15 +77,16 @@ contract Bet {
         if (team == 1) {
             total1 += msg.value;
             team1[msg.sender] = bettor;
-            addy1.push(payable(msg.sender));
+            addy1.push(address(uint160(msg.sender)));
         } else {
             total2 += msg.value;
             team2[msg.sender] = bettor;
-            addy2.push(payable(msg.sender));
+            addy2.push(address(uint160(msg.sender)));
         }
     }
 
-    function payout(uint32 _winner) public payable {
+    function payout() public payable {
+        uint32 _winner = 1;
         uint256 amount;
         if (_winner == 1) {
             uint256 ratio1 = total2 / total1;

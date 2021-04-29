@@ -3,10 +3,8 @@ import { Text, View, TextInput, TouchableOpacity, Button, Form} from 'react-nati
 import { firebase } from '../../firebase/config'
 import Web3 from 'web3';
 import styles from "./styles"
+import { betAbi } from './abi/abis';
 import { ThemeConsumer } from 'react-bootstrap/esm/ThemeProvider';
-
-
-
 
 class PlayScreen extends Component {
 
