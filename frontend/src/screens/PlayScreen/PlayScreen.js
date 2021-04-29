@@ -36,21 +36,19 @@ class PlayScreen extends Component {
         event.preventDefault();
     }
 
-    
-
-    /* If this is not working for demo, comment the loadBlockchainData() and componentWillMount() function out */
-    /*
     async loadBlockchainData() {
-        const web3 = new Web3(Web3.givenProvider)
-        const accounts = await web3.eth.getAccounts()
-        const balance = await web3.eth.getBalance(accounts[0])
-        this.setState({ account: accounts[0], balance: web3.utils.fromWei(balance, 'ether')})
-    } 
-
-    
+        if (window.ethereum) {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            web3 = new Web3(window.ethereum);
+            this.setState({ account: accounts[0] })
+            const balance = await web3.eth.getBalance(accounts[0])
+            this.setState({balance: web3.utils.fromWei(balance, 'ether')})
+        }
+    }
+     
     componentWillMount() {
         this.loadBlockchainData()
-    } */
+    } 
 
     logOut() {
         firebase.auth().signOut().then(() => {
