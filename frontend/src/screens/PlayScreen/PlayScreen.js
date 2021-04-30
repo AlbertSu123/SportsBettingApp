@@ -15,24 +15,21 @@ class PlayScreen extends Component {
         taskCount: 0,
         tasks: [],
         amount: 0,
-        value: 'Team 1'
+        value: '1'
         }
 
         this.handleTeamChange = this.handleTeamChange.bind(this);
         this.handleTeamSubmit = this.handleTeamSubmit.bind(this);
+        this.handlePayoutPress = this.handlePayoutPress.bind(this);
 
-        const infuraProjectId = 'dc680c95a7eb4f79b01b29cad11003e1';
-        this.logOut = this.logOut.bind(this)
+        // const infuraProjectId = 'dc680c95a7eb4f79b01b29cad11003e1';
+        // this.logOut = this.logOut.bind(this)
     }
 
     handleTeamChange(event) {
         this.setState({value: event.target.value});
     }
 
-    handleTeamSubmit(event) {
-        alert('Your chosen team is: ' + this.state.value);
-        event.preventDefault();
-    }
 
     async loadBlockchainData() {
         if (window.ethereum) {
@@ -43,10 +40,34 @@ class PlayScreen extends Component {
             this.setState({balance: web3.utils.fromWei(balance, 'ether')})
         }
     }
-     
+
     componentWillMount() {
         this.loadBlockchainData()
     } 
+
+    async handleTeamSubmit(event) {
+        const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D'
+        const bet = new web3.eth.Contract(betAbi, contractAddr);
+        const account = this.state.account;
+        var teamInt = parseInt(this.state.value)
+        alert('Your chosen team is: ' + this.state.value);
+        event.preventDefault();
+        const gas = 300000
+        const result = await bet.methods.joinGame(teamInt).send({
+            from: account,
+            gas,
+            value: web3.utils.toWei(this.state.amount[0], 'ether') 
+        })
+        console.log(result);
+    }
+    
+    async handlePayoutPress() {
+        const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D'
+        const bet = new web3.eth.Contract(betAbi, contractAddr);
+        const result = await bet.methods.leader_addy.call();
+        // setGetNumber(result);
+        console.log(result);
+    }
 
     logOut() {
         firebase.auth().signOut().then(() => {
@@ -88,8 +109,8 @@ class PlayScreen extends Component {
                     <Text style={styles.AccountInfo}>{`Which team would you like to bet for?`}  </Text>
                     <form onSubmit={this.handleTeamSubmit}>
                         <select value={this.state.value} onChange={this.handleTeamChange}>
-                            <option value="Team 1">Team 1</option>
-                            <option value="Team 2">Team 2</option>
+                            <option value="1">Team 1</option>
+                            <option value="2">Team 2</option>
                         </select>
                         <input type="submit" value="Submit" />
                     </form>
@@ -97,7 +118,8 @@ class PlayScreen extends Component {
                     <Button
                         title="Payout"
                         color="#36c464"
-                        onPress={() => alert('Payout Received!')}
+                        // onPress={() => alert('Payout Received!')}
+                        onPress={this.handlePayoutPress}
                     />
                 </View>
             </View> 
