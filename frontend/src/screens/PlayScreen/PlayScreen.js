@@ -46,8 +46,11 @@ class PlayScreen extends Component {
     } 
 
     async handleTeamSubmit(event) {
-        const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D'
+        // const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D'
+        const contractAddr = '0x81eb415d4f776D3D4C6031327dCC4297b056a64A'
+        const web3 = new Web3(window.ethereum);
         const bet = new web3.eth.Contract(betAbi, contractAddr);
+        
         const account = this.state.account;
         var teamInt = parseInt(this.state.value)
         alert('Your chosen team is: ' + this.state.value);
@@ -62,10 +65,14 @@ class PlayScreen extends Component {
     }
     
     async handlePayoutPress() {
-        const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D'
+        // const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D' //Truffle
+        const contractAddr = '0x81eb415d4f776D3D4C6031327dCC4297b056a64A'
+        const web3 = new Web3(window.ethereum);
         const bet = new web3.eth.Contract(betAbi, contractAddr);
-        const result = await bet.methods.leader_addy.call();
-        // setGetNumber(result);
+        
+        const result = await bet.methods.payout().send({
+            from: this.state.account}
+        );
         console.log(result);
     }
 

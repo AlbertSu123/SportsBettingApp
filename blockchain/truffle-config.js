@@ -14,7 +14,7 @@ module.exports = {
     },
     ropsten: {
       provider: ropstenProvider,
-      gas: 9000000,
+      gas: 4000000,
       network_id: 3
     }
   }

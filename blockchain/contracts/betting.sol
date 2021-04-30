@@ -28,7 +28,7 @@ contract Bet {
         // });
         total1 = 0;
         total2 = 0;
-        minimumBet = 0; //Figure out actual minimum bet
+        minimumBet = 2; //Figure out actual minimum bet
         leader_addy = address(uint160(msg.sender));
 
         // if (leader.team == 1) {
@@ -69,8 +69,8 @@ contract Bet {
     }
 
     function joinGame(uint32 team) public payable {
-        require(!playerExists(msg.sender));
-        require(msg.value > minimumBet);
+        // require(!playerExists(msg.sender));
+        // require(msg.value > minimumBet);
 
         Player memory bettor = Player({amount: msg.value, team: team});
 
