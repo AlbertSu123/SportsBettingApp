@@ -47,7 +47,7 @@ class PlayScreen extends Component {
 
     async handleTeamSubmit(event) {
         // const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D'
-        const contractAddr = '0xECc4a766a93C3101855bE1ABF0c11FA9796FAcdB'
+        const contractAddr = '0xEAe82F737324BB654aAeAECAc910f225BBfB400f'
         const web3 = new Web3(window.ethereum);
         const bet = new web3.eth.Contract(betAbi, contractAddr);
         console.log(bet);
@@ -56,6 +56,7 @@ class PlayScreen extends Component {
         alert('Your chosen team is: ' + this.state.value);
         event.preventDefault();
         const gas = 3000000
+        console.log(this.state.amount[0])
         const result = await bet.methods.joinGame(teamInt).send({
             from: account,
             value: web3.utils.toWei(this.state.amount[0], 'ether') 
@@ -64,7 +65,7 @@ class PlayScreen extends Component {
     
     async handlePayoutPress() {
         // const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D' //Truffle
-        const contractAddr = '0xECc4a766a93C3101855bE1ABF0c11FA9796FAcdB'
+        const contractAddr = '0xEAe82F737324BB654aAeAECAc910f225BBfB400f'
         const web3 = new Web3(window.ethereum);
         const bet = new web3.eth.Contract(betAbi, contractAddr);
         

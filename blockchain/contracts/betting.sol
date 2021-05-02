@@ -89,18 +89,22 @@ contract Bet {
         uint32 _winner = 1;
         uint256 amount;
         if (_winner == 1) {
-            uint256 ratio1 = total2 / total1;
+            uint256 ratio1 = 0;
+            if (ratio1 != 0){
+                ratio1 =total2 / total1;
+            }
             for (uint32 i = 0; i < addy1.length; i++) {
-                Player memory curr = team1[addy1[i]];
-                amount = curr.amount + curr.amount * ratio1;
+                amount = team1[addy1[i]].amount + team1[addy1[i]].amount * ratio1;
                 addy1[i].transfer(amount);
             }
         } else if (_winner == 2) {
-            uint256 ratio2 = total1 / total2;
-            for (uint32 i = 0; i < addy2.length; i++) {
-                Player memory curr = team2[addy2[i]];
-                amount = curr.amount + curr.amount * ratio2;
-                addy2[i].transfer(amount);
+            uint256 ratio1 = 0;
+            if (ratio1 != 0){
+                ratio1 = total1 / total2;
+            }
+            for (uint32 i = 0; i < addy1.length; i++) {
+                amount = team1[addy1[i]].amount + team1[addy1[i]].amount * ratio1;
+                addy1[i].transfer(amount);
             }
         } else {
             for (uint8 i = 0; i < addy1.length; i++) {
