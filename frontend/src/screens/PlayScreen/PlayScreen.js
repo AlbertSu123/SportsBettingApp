@@ -46,8 +46,7 @@ class PlayScreen extends Component {
     } 
 
     async handleTeamSubmit(event) {
-        // const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D'
-        const contractAddr = '0xEAe82F737324BB654aAeAECAc910f225BBfB400f'
+        const contractAddr = '0x9c1BaF99Be800dd927EC45Daab2c623dD745c78B'
         const web3 = new Web3(window.ethereum);
         const bet = new web3.eth.Contract(betAbi, contractAddr);
         console.log(bet);
@@ -64,8 +63,7 @@ class PlayScreen extends Component {
     }
     
     async handlePayoutPress() {
-        // const contractAddr = '0x92E57A92a365e47380e0a7F94a0b1a9c7edb292D' //Truffle
-        const contractAddr = '0xEAe82F737324BB654aAeAECAc910f225BBfB400f'
+        const contractAddr = '0x9c1BaF99Be800dd927EC45Daab2c623dD745c78B'
         const web3 = new Web3(window.ethereum);
         const bet = new web3.eth.Contract(betAbi, contractAddr);
         

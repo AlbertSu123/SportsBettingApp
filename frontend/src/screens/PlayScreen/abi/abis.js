@@ -1,5 +1,6 @@
 export const betAbi = [
 	{
+		"constant": false,
 		"inputs": [
 			{
 				"internalType": "uint32",
@@ -9,29 +10,36 @@ export const betAbi = [
 		],
 		"name": "joinGame",
 		"outputs": [],
+		"payable": true,
 		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
+		"constant": false,
 		"inputs": [],
 		"name": "kill",
 		"outputs": [],
+		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
+		"constant": false,
 		"inputs": [],
 		"name": "payout",
 		"outputs": [],
+		"payable": true,
 		"stateMutability": "payable",
 		"type": "function"
 	},
 	{
 		"inputs": [],
+		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -47,10 +55,12 @@ export const betAbi = [
 				"type": "address"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "uint256",
@@ -66,54 +76,12 @@ export const betAbi = [
 				"type": "address"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "AmountOne",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "AmountTwo",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "leader",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "amount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint32",
-				"name": "team",
-				"type": "uint32"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
+		"constant": true,
 		"inputs": [],
 		"name": "leader_addy",
 		"outputs": [
@@ -123,10 +91,12 @@ export const betAbi = [
 				"type": "address"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [],
 		"name": "minimumBet",
 		"outputs": [
@@ -136,10 +106,12 @@ export const betAbi = [
 				"type": "uint256"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -155,10 +127,12 @@ export const betAbi = [
 				"type": "bool"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -179,10 +153,12 @@ export const betAbi = [
 				"type": "uint32"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
 				"internalType": "address",
@@ -203,10 +179,12 @@ export const betAbi = [
 				"type": "uint32"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [],
 		"name": "total1",
 		"outputs": [
@@ -216,10 +194,12 @@ export const betAbi = [
 				"type": "uint256"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [],
 		"name": "total2",
 		"outputs": [
@@ -229,6 +209,7 @@ export const betAbi = [
 				"type": "uint256"
 			}
 		],
+		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
 	}

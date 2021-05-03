@@ -1,13 +1,10 @@
 //SPDX-License-Identifier: GPL-3.0
-// pragma solidity > 0.6.1 < 0.7.0;
 pragma solidity > 0.5.15 < 0.7.0;
-
 
 contract Bet {
     uint256 public minimumBet;
     uint256 public total1;
     uint256 public total2;
-    Player public leader;
     address payable public leader_addy;
 
     mapping(address => Player) public team1;
@@ -20,57 +17,44 @@ contract Bet {
         uint32 team;
     }
 
-    constructor() public /* uint256 _amount, uint32 _team */
-    {
-        // leader = Player({
-        //     amount: _amount,
-        //     team: _team
-        // });
+    constructor() public {
         total1 = 0;
         total2 = 0;
-        minimumBet = 2; //Figure out actual minimum bet
+        minimumBet = 0; //Figure out actual minimum bet
         leader_addy = address(uint160(msg.sender));
-
-        // if (leader.team == 1) {
-        //     total1 += leader.amount;
-        //     team1[leader_addy] = leader;
-        //     addy1.push(leader_addy);
-        // } else {
-        //     total2 += leader.amount;
-        //     team2[leader_addy] = leader;
-        //     addy2.push(leader_addy);
-        // }
     }
-
-    function AmountOne() public view returns (uint256) {
-        return total1;
-    }
-
-    function AmountTwo() public view returns (uint256) {
-        return total2;
+    
+     function kill() public onlyBy(leader_addy) {
+       require(address(this).balance <= 0, "Cannot destroy a contract with ether left behind.");        
+       selfdestruct(leader_addy); //Leader gets all remaining ether so I am ensuring none is left behind.
     }
 
     function playerExists(address _addy) public view returns (bool) {
-        for (uint8 i = 0; i < addy1.length; i++) {
+        for (uint32 i = 0; i < addy1.length; i++) {
             if (addy1[i] == _addy) {
                 return true;
             }
         }
-        for (uint8 i = 0; i < addy2.length; i++) {
+        for (uint32 i = 0; i < addy2.length; i++) {
             if (addy2[i] == _addy) {
                 return true;
             }
         }
         return false;
     }
-
-    function kill() public {
-        if (msg.sender == leader_addy) selfdestruct(leader_addy);
+    
+    modifier onlyBy(address _account) {
+        require(
+            msg.sender == _account,
+            "Sender not authorized."
+        );
+        _;
     }
 
+
     function joinGame(uint32 team) public payable {
-        // require(!playerExists(msg.sender));
-        // require(msg.value > minimumBet);
+        require(!playerExists(msg.sender));
+        require(msg.value > minimumBet);
 
         Player memory bettor = Player({amount: msg.value, team: team});
 
@@ -88,33 +72,49 @@ contract Bet {
     function payout() public payable {
         uint32 _winner = 1;
         uint256 amount;
+        uint32 tol = 10000;
+
         if (_winner == 1) {
             uint256 ratio1 = 0;
-            if (ratio1 != 0){
-                ratio1 =total2 / total1;
+            if (total1 != 0){
+                ratio1 = (tol * total2) / total1;
             }
             for (uint32 i = 0; i < addy1.length; i++) {
-                amount = team1[addy1[i]].amount + team1[addy1[i]].amount * ratio1;
+                amount = tol * team1[addy1[i]].amount + team1[addy1[i]].amount * ratio1;
+                amount = amount/tol;
                 addy1[i].transfer(amount);
             }
         } else if (_winner == 2) {
-            uint256 ratio1 = 0;
-            if (ratio1 != 0){
-                ratio1 = total1 / total2;
+            uint256 ratio2 = 0;
+            if (total2 != 0){
+                ratio2 = (tol * total1) / total2;
             }
-            for (uint32 i = 0; i < addy1.length; i++) {
-                amount = team1[addy1[i]].amount + team1[addy1[i]].amount * ratio1;
-                addy1[i].transfer(amount);
+            for (uint32 i = 0; i < addy2.length; i++) {
+                amount = tol * team2[addy2[i]].amount + team2[addy2[i]].amount * ratio2;
+                amount = amount/tol;
+                addy2[i].transfer(amount);
             }
         } else {
-            for (uint8 i = 0; i < addy1.length; i++) {
-                Player memory curr = team1[addy1[i]];
-                addy1[i].transfer(curr.amount);
+            for (uint32 i = 0; i < addy1.length; i++) {
+                amount = team1[addy1[i]].amount;
+                addy1[i].transfer(amount);
             }
-            for (uint8 i = 0; i < addy2.length; i++) {
-                Player memory curr = team2[addy2[i]];
-                addy2[i].transfer(curr.amount);
+            for (uint32 i = 0; i < addy2.length; i++) {
+                amount = team2[addy2[i]].amount;
+                addy2[i].transfer(amount);
             }
         }
+        
+        //Cleanup Process
+        total1 = 0;
+        total2 = 0;
+        for (uint32 i = 0; i < addy1.length; i++) {
+            delete team1[addy1[i]];
+        }
+        for (uint32 i = 0; i < addy2.length; i++) {
+            delete team2[addy2[i]];
+        }
+        addy1.length = 0;
+        addy2.length = 0;
     }
 }
